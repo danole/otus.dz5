@@ -11,6 +11,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
+import java.util.concurrent.TimeUnit;
+
 public class Homework {
 
     private Logger logger = LogManager.getLogger(Homework.class.getName());
@@ -35,10 +37,11 @@ public class Homework {
     Проверить что в поисковой выдаче первый результат Онлайн‑курсы для профессионалов, дистанционное обучение. */
 
     @Test
-    public void FindOtusTest() {
+    public void findOtusTest() {
         ChromeOptions options = new ChromeOptions();
         options.addArguments("headless");
         driver = new ChromeDriver(options);
+        driver.manage().timeouts().implicitlyWait(5,TimeUnit.SECONDS);
         driver.get("https://duckduckgo.com/");
         logger.info("Зашел на сайт");
         WebElement input = driver.findElement(By.xpath("//input[@placeholder='Онлайн-поиск без слежки']"));
@@ -57,8 +60,9 @@ public class Homework {
     Проверить что картинка открылась в модальном окне*/
 
     @Test
-    public void ModalWindowTest() {
+    public void modalWindowTest() {
         driver = new ChromeDriver();
+        driver.manage().timeouts().implicitlyWait(5,TimeUnit.SECONDS);
         String link = "https://demo.w3layouts.com/demos_new/template_demo/03-10-2020/photoflash-liberty-demo_Free/" +
                 "685659620/web/index.html?_ga=2.181802926.889871791.1632394818-2083132868.1632394818";
         driver.manage().window().fullscreen();
@@ -79,13 +83,13 @@ public class Homework {
     Вывести в лог все cookie*/
 
     @Test
-    public void OutputCookieTest() throws InterruptedException {
+    public void outputCookieTest() throws InterruptedException {
         driver = new ChromeDriver();
+        driver.manage().timeouts().implicitlyWait(5,TimeUnit.SECONDS);
         driver.get("https://otus.ru");
         logger.info("Перешел на сайт Отус");
         WebElement button = driver.findElement(By.xpath("//button[contains(text(),'Вход')]"));
         button.click();
-        Thread.sleep(2000); // implisitly wait устарел и больше не работает, поэтому вот так ))
         WebElement email = driver.findElement(By.xpath("//input[@type='text' and @placeholder='Электронная почта']"));
         email.sendKeys("email");
         WebElement password = driver.findElement(By.name("password"));
